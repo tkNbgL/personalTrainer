@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,9 +37,9 @@ public class UserInformation {
 	private Date dateOfBirth;
 	
 	@Column(name="gender", nullable=false)
-	private Gender gender;
+	private boolean gender;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id", referencedColumnName="user_id")
 	private User user;
 	
@@ -48,7 +49,21 @@ public class UserInformation {
 	}
 	
 	
-	public UserInformation(int userInformationId, long height, long weigth, @Past Date dateOfBirth, Gender gender,
+	
+	
+	public UserInformation(long height, long weigth, @Past Date dateOfBirth, boolean gender, User user) {
+		super();
+		this.height = height;
+		this.weigth = weigth;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.user = user;
+	}
+
+
+
+
+	public UserInformation(int userInformationId, long height, long weigth, @Past Date dateOfBirth, boolean gender,
 			User user) {
 		super();
 		this.userInformationId = userInformationId;
@@ -60,6 +75,18 @@ public class UserInformation {
 	}
 	
 	
+	
+	public UserInformation(long height, long weigth, @Past Date dateOfBirth, boolean gender) {
+		super();
+		this.height = height;
+		this.weigth = weigth;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+	}
+
+
+
+
 	public int getUserInformationId() {
 		return userInformationId;
 	}
@@ -84,10 +111,11 @@ public class UserInformation {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public Gender getGender() {
+	public boolean getGender() {
 		return gender;
 	}
-	public void setGender(Gender gender) {
+	public void setGender(boolean gender) {
+		
 		this.gender = gender;
 	}
 	public User getUser() {
@@ -99,6 +127,3 @@ public class UserInformation {
 		
 }
 
-enum Gender{
-	Male, Female
-}

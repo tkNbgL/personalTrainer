@@ -8,5 +8,6 @@ import tk.ocb.main.model.UserInformation;
 @Repository
 public interface UserInformationRepository
 				extends JpaRepository<UserInformation, Integer>{
-
+	
+	
 }

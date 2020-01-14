@@ -3,6 +3,7 @@ package tk.ocb.main.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,13 +33,23 @@ public class User {
 	@Column(name="mobile_number", nullable=false, length=30)
 	private String mobileNumber;
 	
-	@OneToOne(mappedBy="user")
+	@OneToOne(mappedBy="user", fetch = FetchType.LAZY)
 	private UserInformation userInformation;
 	
 	
 	
 	public User() {
 		
+	}
+	
+	public User(String email, String password, String firstName, String lastName, String mobileNumber,
+			UserInformation userInformation) {
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.mobileNumber = mobileNumber;
+		this.userInformation = userInformation;
 	}
 	
 	

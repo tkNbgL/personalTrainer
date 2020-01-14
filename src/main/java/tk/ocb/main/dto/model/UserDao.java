@@ -1,6 +1,5 @@
 package tk.ocb.main.dto.model;
 
-import tk.ocb.main.model.UserInformation;
 
 public class UserDao {
 	private String email;
@@ -13,7 +12,7 @@ public class UserDao {
 	
 	private String mobileNumber;
 	
-	private UserInformation userInformation;
+	private UserInformationDao userInformationDao;
 	
 
 	public UserDao() {
@@ -21,14 +20,14 @@ public class UserDao {
 	}
 
 	public UserDao(String email, String password, String firstName, String lastName, String mobileNumber,
-			UserInformation userInformation) {
+			UserInformationDao userInformationDao) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.mobileNumber = mobileNumber;
-		this.userInformation = userInformation;
+		this.userInformationDao = userInformationDao;
 	}
 
 	public String getEmail() {
@@ -73,12 +72,12 @@ public class UserDao {
 	
 	
 
-	public UserInformation getUserInformation() {
-		return userInformation;
+	public UserInformationDao getUserInformationDao() {
+		return userInformationDao;
 	}
 
-	public void setUserInformation(UserInformation userInformation) {
-		this.userInformation = userInformation;
+	public void setUserInformationDao(UserInformationDao userInformationDao) {
+		this.userInformationDao = userInformationDao;
 	}
 
 	@Override

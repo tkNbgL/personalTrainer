@@ -16,7 +16,7 @@ public class UserMapper {
 		userDao.setFirstName(user.getFirstName());
 		userDao.setLastName(user.getLastName());
 		userDao.setMobileNumber(user.getMobileNumber());
-		userDao.setUserInformation(user.getUserInformation());
+		userDao.setUserInformationDao(UserInformationMapper.toUserInformationDto(user.getUserInformation()));
 		
 		return userDao;
 	}

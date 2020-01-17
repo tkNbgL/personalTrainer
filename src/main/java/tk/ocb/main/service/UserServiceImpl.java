@@ -70,9 +70,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<UserDao> findUserByFirstAndLastName(String firstName, String lastName) {
+	public UserDao createNewUser(UserDao userDao) {
 		// TODO Auto-generated method stub
-		return null;
+		userRepository.save(userDao);
 	}
+
+	
 
 }

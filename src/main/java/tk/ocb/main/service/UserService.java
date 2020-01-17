@@ -23,7 +23,9 @@ public interface UserService {
 	
 	List<UserDao> findUserByLastName(String lastName);
 	
-	List<UserDao> findUserByFirstAndLastName(String firstName, String lastName);
+	UserDao createNewUser(UserDao userDao);
+	
+	//List<UserDao> findUserByFirstAndLastName(String firstName, String lastName);
 	//////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 }

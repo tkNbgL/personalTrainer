@@ -22,4 +22,10 @@ public class UserInformationMapper {
 		
 		return userInformationDao;
 	}
+	
+	public static UserInformation toUserInformation(UserInformationDao userInformationDao) {
+		UserInformation userInformation = new UserInformation();
+		
+		userInformation.setUserInformationId(0);
+	}
 }

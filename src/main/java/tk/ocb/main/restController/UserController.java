@@ -55,11 +55,20 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/phone/")
+	@GetMapping("/phone/{mobilenumber}")
 	public UserDao findUserByMobileNumber(@PathVariable String mobileNumber) {
 		return userServiceImpl.findUserByMobileNumber(mobileNumber);
 	}
 	
-	public List
+	@GetMapping("/users/{firstname}")
+	public List<UserDao> findUserByFirstName(@PathVariable String firstName) {
+		return userServiceImpl.findUserByFirstName(firstName);
+	}
+	
+	@GetMapping("/users/{lastname}")
+	public List<UserDao> findUserByLastName(@PathVariable String lastName){
+		return userServiceImpl.findUserByLastName(lastName);
+	}
+	
 
 }

@@ -20,4 +20,22 @@ public class UserMapper {
 		
 		return userDao;
 	}
+	
+	public static User toUser(UserDao userDao) {
+		User user = new User();
+		
+		user.setUserId(0);
+		user.setEmail(userDao.getEmail());
+		user.setPassword(userDao.getPassword());
+		user.setFirstName(userDao.getFirstName());
+		user.setLastName(userDao.getLastName());
+		user.setMobileNumber(userDao.getMobileNumber());
+		
+		if(userDao.equals(null))
+			user.setUserInformation(null);
+		else
+			user.setUserInformation(userDao.getUserInformationDao());
+		
+		return user;
+	}
 }

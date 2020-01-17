@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.sun.istack.Nullable;
+
 @Entity
 @Table(name="user")
 public class User {
@@ -33,6 +35,7 @@ public class User {
 	@Column(name="mobile_number", nullable=false, length=30)
 	private String mobileNumber;
 	
+	@Nullable
 	@OneToOne(mappedBy="user", fetch = FetchType.LAZY)
 	private UserInformation userInformation;
 	

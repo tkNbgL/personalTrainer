@@ -11,7 +11,7 @@ public class UserInformationMapper {
 		toUserInformationDto(UserInformation userInformation) {
 		
 		UserInformationDao userInformationDao = new UserInformationDao();
-		
+			
 		userInformationDao.setHeight(userInformation.getHeight());
 		
 		userInformationDao.setWeigth(userInformation.getWeigth());
@@ -26,6 +26,12 @@ public class UserInformationMapper {
 	public static UserInformation toUserInformation(UserInformationDao userInformationDao) {
 		UserInformation userInformation = new UserInformation();
 		
-		userInformation.setUserInformationId(0);
+		//userInformation.setUserInformationId(0);
+		userInformation.setHeight(userInformationDao.getHeight());
+		userInformation.setWeigth(userInformationDao.getWeigth());
+		userInformation.setDateOfBirth(userInformationDao.getDateOfBirth());
+		userInformation.setGender(userInformationDao.isGender());
+		
+		return userInformation;
 	}
 }

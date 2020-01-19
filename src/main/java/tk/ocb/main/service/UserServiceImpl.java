@@ -4,22 +4,30 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tk.ocb.main.dto.mapper.UserInformationMapper;
 import tk.ocb.main.dto.mapper.UserMapper;
 import tk.ocb.main.dto.model.UserDao;
-import tk.ocb.main.exception.UserNotFoundException;
+import tk.ocb.main.dto.model.UserInformationDao;
 import tk.ocb.main.model.User;
+import tk.ocb.main.model.UserInformation;
+import tk.ocb.main.repository.UserInformationRepository;
 import tk.ocb.main.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
+	
+	private final Logger logger = LoggerFactory.getLogger(UserService.class);
+	
 	@Autowired
 	private UserRepository userRepository;
-	
+	@Autowired
+	private UserInformationRepository userInformationRepository;
 	
 	@Override
 	public List<UserDao> findAllUser() {
@@ -70,11 +78,66 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDao createNewUser(UserDao userDao) {
+	public User createNewUser(UserDao userDao) {
 		// TODO Auto-generated method stub
-		userRepository.save(userDao);
+		User newUser = UserMapper.toUser(userDao);
+		logger.info("id of the newly created entity --> {}",userRepository.save(newUser).getUserId());
+		return newUser;
 	}
 
+	@Override
+	public User updateUser(UserDao userDao, int id) {
+		// TODO Auto-generated method stub
+		if(userRepository.findById(id).isPresent()) {
+			User existedUser = userRepository.findById(id).get();
+			
+			existedUser.setEmail(userDao.getEmail());
+			existedUser.setFirstName(userDao.getFirstName());
+			existedUser.setLastName(userDao.getLastName());
+			existedUser.setMobileNumber(userDao.getMobileNumber());
+			existedUser.setPassword(userDao.getPassword());
+			
+			if(userDao.getUserInformationDao() != null)
+				existedUser
+				.setUserInformation(UserInformationMapper
+						.toUserInformation(userDao.getUserInformationDao()));
+			else
+				existedUser.setUserInformation(null);
+			
+			User updatedUser = userRepository.save(existedUser);
+			
+			return updatedUser;
+		}else {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public User deleteUser(int id) {
+		// TODO Auto-generated method stub
+		Optional<User> deletedUser = userRepository.findById(id);
+		
+		if(deletedUser.isPresent()) {
+			logger.info("user is deleted");
+			userRepository.deleteById(id);
+		}
+		//exception handling in here
+		
+		return deletedUser.get();
+	}
+
+	@Override
+	public User UpdateUserInformation(int userId, UserInformationDao userInformationDao) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findById(userId).get();
+		UserInformation userInformation = UserInformationMapper.toUserInformation(userInformationDao);
+		user.setUserInformation(userInformation);	
+		userRepository.save(user);
+		return user;
+	}
+
+	
 	
 
 }

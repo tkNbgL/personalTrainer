@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -16,7 +17,7 @@ import com.sun.istack.Nullable;
 @Table(name="user")
 public class User {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="user_id")
 	private int userId;
 	
@@ -35,25 +36,17 @@ public class User {
 	@Column(name="mobile_number", nullable=false, length=30)
 	private String mobileNumber;
 	
-	@Nullable
-	@OneToOne(mappedBy="user", fetch = FetchType.LAZY)
+
+	@OneToOne(fetch=FetchType.LAZY ,cascade=CascadeType.ALL)
+	@JoinColumn(name="userInformationId", nullable=true)
 	private UserInformation userInformation;
-	
 	
 	
 	public User() {
 		
 	}
 	
-	public User(String email, String password, String firstName, String lastName, String mobileNumber,
-			UserInformation userInformation) {
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.mobileNumber = mobileNumber;
-		this.userInformation = userInformation;
-	}
+	
 	
 	
 	public User(int userId, String email, String password, String firstName, String lastName, String mobileNumber,
@@ -69,6 +62,23 @@ public class User {
 	}
 	
 	
+
+
+
+
+	public User(int userId, String email, String password, String firstName, String lastName, String mobileNumber) {
+		super();
+		this.userId = userId;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.mobileNumber = mobileNumber;
+	}
+
+
+
+
 	public int getUserId() {
 		return userId;
 	}
@@ -105,12 +115,19 @@ public class User {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
+
+
+
 	public UserInformation getUserInformation() {
 		return userInformation;
 	}
+
+
+
 	public void setUserInformation(UserInformation userInformation) {
 		this.userInformation = userInformation;
 	}
+
 	
 	
 	

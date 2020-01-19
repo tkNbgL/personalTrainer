@@ -2,7 +2,6 @@ package tk.ocb.main.restController;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import tk.ocb.main.dto.model.UserDao;
-import tk.ocb.main.exception.UserNotFoundException;
+import tk.ocb.main.dto.model.UserInformationDao;
 import tk.ocb.main.model.User;
-import tk.ocb.main.model.UserInformation;
-import tk.ocb.main.repository.UserInformationRepository;
-import tk.ocb.main.repository.UserRepository;
 import tk.ocb.main.service.UserService;
-import tk.ocb.main.service.UserServiceImpl;
 
 
 @RestController
@@ -36,8 +31,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userServiceImpl;
-	@Autowired
-	private UserInformationRepository userInformationRepository;
 	
 	@GetMapping("/users")
 	public List<UserDao> retrieveAllUsers(){
@@ -55,20 +48,62 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/phone/{mobilenumber}")
+	@GetMapping("/phone/{mobileNumber}")
 	public UserDao findUserByMobileNumber(@PathVariable String mobileNumber) {
 		return userServiceImpl.findUserByMobileNumber(mobileNumber);
 	}
 	
-	@GetMapping("/users/{firstname}")
+	@GetMapping("/name/{firstName}")
 	public List<UserDao> findUserByFirstName(@PathVariable String firstName) {
 		return userServiceImpl.findUserByFirstName(firstName);
 	}
 	
-	@GetMapping("/users/{lastname}")
+	@GetMapping("/lastname/{lastName}")
 	public List<UserDao> findUserByLastName(@PathVariable String lastName){
 		return userServiceImpl.findUserByLastName(lastName);
 	}
 	
-
+	@PostMapping("/users")
+	public ResponseEntity<Object> createUser(@RequestBody UserDao userDao){
+		User savedUser = userServiceImpl.createNewUser(userDao);
+		
+		URI location = ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(savedUser.getUserId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+	
+	@PutMapping("/users/{id}")
+	public ResponseEntity<Object> updateUser(@RequestBody UserDao userDao, @PathVariable int id){
+		User updatedUser = userServiceImpl.updateUser(userDao, id);
+		
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(updatedUser.getUserId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+	
+	@DeleteMapping("/users/{id}")
+	public void deleteUser(@PathVariable int id){
+		User deletedUser = userServiceImpl.deleteUser(id);
+		logger.info("deleted element --> {}", deletedUser.getFirstName());
+	}
+	
+	@PutMapping("/users/userinformation/{id}")
+	public ResponseEntity<Object> updateUserInformation(@PathVariable int id,
+											@RequestBody UserInformationDao userInformationDao){
+		User user = userServiceImpl.UpdateUserInformation(id, userInformationDao);
+		
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(user.getUserId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+	
 }

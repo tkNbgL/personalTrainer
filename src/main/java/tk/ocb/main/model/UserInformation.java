@@ -7,21 +7,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 
-import com.sun.istack.Nullable;
 
 @Entity
 @Table(name="user_information")
 public class UserInformation {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="user_information_id")
 	private int userInformationId;
 	
@@ -39,30 +37,16 @@ public class UserInformation {
 	@Column(name="gender", nullable=false)
 	private boolean gender;
 
-	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id", referencedColumnName="user_id")
+	@OneToOne(mappedBy="userInformation")
 	private User user;
 	
 	
+
 	public UserInformation() {
 		
 	}
 	
 	
-	
-	
-	public UserInformation(long height, long weigth, @Past Date dateOfBirth, boolean gender, User user) {
-		super();
-		this.height = height;
-		this.weigth = weigth;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.user = user;
-	}
-
-
-
-
 	public UserInformation(int userInformationId, long height, long weigth, @Past Date dateOfBirth, boolean gender,
 			User user) {
 		super();
@@ -75,9 +59,10 @@ public class UserInformation {
 	}
 	
 	
-	
-	public UserInformation(long height, long weigth, @Past Date dateOfBirth, boolean gender) {
+
+	public UserInformation(int userInformationId, long height, long weigth, @Past Date dateOfBirth, boolean gender) {
 		super();
+		this.userInformationId = userInformationId;
 		this.height = height;
 		this.weigth = weigth;
 		this.dateOfBirth = dateOfBirth;
@@ -86,6 +71,13 @@ public class UserInformation {
 
 
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getUserInformationId() {
 		return userInformationId;
@@ -118,12 +110,8 @@ public class UserInformation {
 		
 		this.gender = gender;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
+
 		
 }
 

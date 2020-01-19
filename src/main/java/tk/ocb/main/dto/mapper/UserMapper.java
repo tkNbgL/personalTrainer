@@ -16,7 +16,11 @@ public class UserMapper {
 		userDao.setFirstName(user.getFirstName());
 		userDao.setLastName(user.getLastName());
 		userDao.setMobileNumber(user.getMobileNumber());
-		userDao.setUserInformationDao(UserInformationMapper.toUserInformationDto(user.getUserInformation()));
+		if(user.getUserInformation() == null) 
+			userDao.setUserInformationDao(null);
+		else {
+			userDao.setUserInformationDao(UserInformationMapper.toUserInformationDto(user.getUserInformation()));
+		}
 		
 		return userDao;
 	}
@@ -24,17 +28,17 @@ public class UserMapper {
 	public static User toUser(UserDao userDao) {
 		User user = new User();
 		
-		user.setUserId(0);
+		//user.setUserId(0);
 		user.setEmail(userDao.getEmail());
 		user.setPassword(userDao.getPassword());
 		user.setFirstName(userDao.getFirstName());
 		user.setLastName(userDao.getLastName());
 		user.setMobileNumber(userDao.getMobileNumber());
 		
-		if(userDao.equals(null))
+		if(userDao.getUserInformationDao() == null)
 			user.setUserInformation(null);
 		else
-			user.setUserInformation(userDao.getUserInformationDao());
+			user.setUserInformation(UserInformationMapper.toUserInformation(userDao.getUserInformationDao()));
 		
 		return user;
 	}

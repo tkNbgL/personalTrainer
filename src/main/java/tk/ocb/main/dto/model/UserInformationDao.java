@@ -2,11 +2,19 @@ package tk.ocb.main.dto.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Past;
+
 public class UserInformationDao {
+	@Min(value=150, message = "min is 150")
+	@Max(value=200, message = "max is 200")
 	private long height;
-	
+	@Min(value=40, message="min is 40")
+	@Max(value=100, message="max is 100")
 	private long weigth;
 	
+	@Past
 	private Date dateOfBirth;
 	
 	private boolean gender;

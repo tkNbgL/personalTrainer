@@ -37,7 +37,7 @@ public class UserInformation {
 	@Column(name="gender", nullable=false)
 	private boolean gender;
 
-	@OneToOne(mappedBy="userInformation")
+	@OneToOne(mappedBy="userInformation", fetch=FetchType.LAZY)
 	private User user;
 	
 	

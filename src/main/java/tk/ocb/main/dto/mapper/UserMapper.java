@@ -11,6 +11,7 @@ public class UserMapper {
 	public static UserDao toUserDto(User user) {
 		UserDao userDao = new UserDao();
 		
+		userDao.setId(user.getUserId());
 		userDao.setEmail(user.getEmail());
 		userDao.setPassword(user.getPassword());
 		userDao.setFirstName(user.getFirstName());

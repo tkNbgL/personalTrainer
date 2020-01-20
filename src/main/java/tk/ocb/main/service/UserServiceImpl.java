@@ -13,6 +13,7 @@ import tk.ocb.main.dto.mapper.UserInformationMapper;
 import tk.ocb.main.dto.mapper.UserMapper;
 import tk.ocb.main.dto.model.UserDao;
 import tk.ocb.main.dto.model.UserInformationDao;
+import tk.ocb.main.exception.UserNotFoundException;
 import tk.ocb.main.model.User;
 import tk.ocb.main.model.UserInformation;
 import tk.ocb.main.repository.UserInformationRepository;
@@ -42,6 +43,11 @@ public class UserServiceImpl implements UserService{
 	public UserDao findUserById(int id) {
 		// TODO Auto-generated method stub
 		Optional<User> user = userRepository.findById(id);
+		
+		if(user.isEmpty()) {
+			throw new UserNotFoundException("id- " + id);
+		}
+		
 		return UserMapper.toUserDto(user.get());
 	}
 

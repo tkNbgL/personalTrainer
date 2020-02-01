@@ -27,8 +27,6 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private UserInformationRepository userInformationRepository;
 	
 	@Override
 	public List<UserDao> findAllUser() {

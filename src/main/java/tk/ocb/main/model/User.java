@@ -46,9 +46,6 @@ public class User {
 		
 	}
 	
-	
-	
-	
 	public User(int userId, String email, String password, String firstName, String lastName, String mobileNumber,
 			UserInformation userInformation) {
 		super();
@@ -61,11 +58,6 @@ public class User {
 		this.userInformation = userInformation;
 	}
 	
-	
-
-
-
-
 	public User(int userId, String email, String password, String firstName, String lastName, String mobileNumber) {
 		super();
 		this.userId = userId;
@@ -76,8 +68,16 @@ public class User {
 		this.mobileNumber = mobileNumber;
 	}
 
-
-
+	
+	
+	public User(String email, String password, String firstName, String lastName, String mobileNumber) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.mobileNumber = mobileNumber;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -116,19 +116,12 @@ public class User {
 		this.mobileNumber = mobileNumber;
 	}
 
-
-
 	public UserInformation getUserInformation() {
 		return userInformation;
 	}
-
-
 
 	public void setUserInformation(UserInformation userInformation) {
 		this.userInformation = userInformation;
 	}
 
-	
-	
-	
 }

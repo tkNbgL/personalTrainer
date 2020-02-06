@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import tk.ocb.main.dto.mapper.UserInformationMapper;
@@ -84,6 +85,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User createNewUser(UserDao userDao) {
 		// TODO Auto-generated method stub
+		String pw_hash = BCrypt.hashpw(userDao.getPassword(), BCrypt.gensalt());
+		userDao.setPassword(pw_hash);
 		User newUser = UserMapper.toUser(userDao);
 		logger.info("id of the newly created entity --> {}",userRepository.save(newUser).getUserId());
 		return newUser;
